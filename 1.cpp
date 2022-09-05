@@ -35,17 +35,21 @@ vector<int> frequencySort(vector<int>& nums) {
         //now i want to print key in number of time freq
         //i tried this way:
         
-         vector<int> g;
-        for(int i=0; i<v.size(); i++)
+         v for(int i= 0; i<v.size(); i++)
         {
-        int k= m.find(v[i])->first;
-            for(int j=0; j<v[i]; j++)
+            for(auto it=m.begin(); it!=m.end(); it++)
             {
-              g.push_back(k);  
+                if(it->second==v[i])
+                {
+                    for(int i=0; i<it->second; it++)
+                    {g.push_back(it->first);}
+                }
             }
         }
-        
+            
+        }
         return g;
+    
        
        
      //  this part m doing something wrong 
