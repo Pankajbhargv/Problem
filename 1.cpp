@@ -35,26 +35,24 @@ vector<int> frequencySort(vector<int>& nums) {
         //now i want to print key in number of time freq
         //i tried this way:
         
-         v for(int i= 0; i<v.size(); i++)
+       for(int i= 0; i<v.size(); i++)
         {
             for(auto it=m.begin(); it!=m.end(); it++)
             {
                 if(it->second==v[i])
                 {
                     for(int i=0; i<it->second; it++)
-                    {g.push_back(it->first);}
+                    {ge.push_back(it->first);}
                 }
             }
         }
-            
+           return ge;  
         }
-        return g;
-    
-       
+     
        
      //  this part m doing something wrong 
        
 
 // ERROR:
 // Line 340: Char 30: runtime error: member call on null pointer of type 'std::__detail::_Hash_node_value_base<std::pair<const int, int>>' (hashtable_policy.h)
-// SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /usr/bin/../lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/9/bits/hashtable_policy.h:349:30
+//SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /usr/bin/../lib/gcc/x86_64-linux-gnu/9/../../../../include/c++/9/bits/hashtable_policy.h:349:30
