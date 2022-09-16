@@ -53,7 +53,7 @@ public class TestNG_ClassSpiceJet{
 	  driver.findElement(EmailRBtn).click();
 	  wait(900);
 	  driver.findElement(EmailTxtBox).sendKeys("anjul.gupta1205@gmail.com");
-	  driver.findElement(PassTxtBox).sendKeys("Anjul12$");
+	  driver.findElement(PassTxtBox).sendKeys("An");
 	  driver.findElement(LoginBtn2).click();
 	  
 	  
