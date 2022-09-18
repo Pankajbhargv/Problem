@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -31,7 +32,7 @@ public class TestNG_ClassSpiceJet{
 	public static WebDriver driver;
 //	FileInputStream fis;
 //	Properties prop;
-	Actions actions = new Actions(driver);
+//	Actions actions = new Actions(driver);
     JavascriptExecutor js = (JavascriptExecutor) driver;
 
 	
@@ -104,7 +105,7 @@ public class TestNG_ClassSpiceJet{
   public void FlightFinder() {
 	  
 	  By FlightOption = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[1]/div[1]/div[2]");
-	  By OneWayRB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[2]/div/div[2]/div[2]/div/div[1]/div[1]/svg/g/circle[1]");
+	  By OneWayRB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[2]/div/div[2]/div[2]/div/div[1]");
 	  By FromTB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[3]/div/div[1]/div");
 	  By ToTB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[3]/div/div[3]/div/div[2]/input");
 	  By DeptDate = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div/div[1]/div[2]");
@@ -127,19 +128,41 @@ public class TestNG_ClassSpiceJet{
 	DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy ");
 	String date2= dateFormat.format(date1);
 	System.out.println(date2);
-	String date3="10/8/2022";
+	String date3="10/12/2022";
+	System.out.println("1");
 	if(date2.compareTo(date3)<0);
 	System.out.println("date is less than today");
-	
-	
-	 driver.findElement(DeptDate).click();
+	wait(2000);
+	System.out.println("11");
+	 driver.findElement(DeptDate).click();	//------------------------------------------------yha problem ari hai--------------------
 	 wait(900);
-	 driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div[2]/div[2]/div[3]/div[2]/div/div[2]/div/div[3]/div[3]/div[1]/div/div")).click();
+	 System.out.println("111");
+//	 driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div[2]/div[2]/div[3]/div[2]/div/div[2]/div/div[3]/div[2]/div[6]/div")).click();
+//	 WebElement month = driver.findElement(month combo locator);
+//	 Select monthCombo = new Select(month);
+//	 monthCombo.selectByVisibleText("March");
+//
+//	 WebElement year = driver.findElement(year combo locator);
+//	 Select yearCombo = new Select(year);
+//	 yearCombo.selectByVisibleText("2015");
+//
+//	 driver.click(By.linkText("31"));
+//	 driver.findElement(By.linkText("15"));
+	 
+		Actions actions = new Actions(driver);		//for mouse hover to select date
+		actions.moveToElement(driver.findElement(By.xpath(date3)));
+		actions.click();
+		actions.build().perform();
+	 
+	 
 	 wait(800);
+	 System.out.println("1111");
 	if( driver.findElement(ReturnDate).isEnabled()==false)
 	{
 		System.out.print("It is one way Ticket");
 	}
+	System.out.println("11111");
+//	Actions actions = new Actions(driver);
 	actions.moveToElement(driver.findElement(Passenger));
 	actions.click();
 																	// for passenger stuff
@@ -167,7 +190,7 @@ public class TestNG_ClassSpiceJet{
 	 WebElement Element = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[2]/div"));
 
      //This will scroll the page till the element is found		
-     js.executeScript("arguments[0].scrollIntoView();", Element);
+//     js.executeScript("arguments[0].scrollIntoView();", Element);
      wait(1000);
      actions.build().perform();
      
