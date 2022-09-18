@@ -1,14 +1,19 @@
 package SpicejetAutomation;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,12 +35,10 @@ public class TestNG_ClassSpiceJet{
 	
 	
 	public static WebDriver driver;
-//	FileInputStream fis;
-//	Properties prop;
-//	Actions actions = new Actions(driver);
-    JavascriptExecutor js = (JavascriptExecutor) driver;
+//	Actions actions = new Actions(driver);		//don't declare obj outside of class
+  //  JavascriptExecutor js = (JavascriptExecutor) driver;			//use for scroll of the element but mouse hover(move to element) do work here
 
-	
+	//METHOD 1 : for wait
 	public void wait(int wt) {	
 		try {
 			Thread.sleep(wt);
@@ -43,6 +46,30 @@ public class TestNG_ClassSpiceJet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	//METHOD2
+	public void captureScreenshot(String msg) {							// FOR SCREEENSHOT
+
+		System.out.println("Screenshot for " + msg);
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy_HH_mm_ss"); //yyyy-MM-dd
+		String dateTime = sdf.format(date);
+		String fileName = "screenshot_" + dateTime;
+		
+		
+		TakesScreenshot scrShot = (TakesScreenshot) driver;
+		File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
+		File destFile = new File(".\\src\\test\\resources\\Screenshots\\" + fileName + ".png");		// EXPLAIN PATH!   . FOR CURRENT PROJECT FOLDER -> src->test-> resources -> screenshot
+		
+		
+			try {
+				FileUtils.copyFile(srcFile, destFile);										// TO COPY SCREENSHOT FILE IN DESTINATION FILE 
+				} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
 	}
 	
 	
@@ -95,12 +122,17 @@ public class TestNG_ClassSpiceJet{
 	  driver.findElement(EmailRBtn).click();
 	  wait(900); 
 	  driver.findElement(EmailTxtBox).sendKeys("anjulgupta1205@gmail.com");
-	  driver.findElement(PassTxtBox).sendKeys("An);
+	  driver.findElement(PassTxtBox).sendKeys("Anjul12$");
 	  wait(500);
 	  driver.findElement(LoginBtn2).click();
 	  wait(6000);
 	  
   }
+  
+  
+  
+  
+  
   @Test(priority=2)
   public void FlightFinder() {
 	  
@@ -108,9 +140,9 @@ public class TestNG_ClassSpiceJet{
 	  By OneWayRB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[2]/div/div[2]/div[2]/div/div[1]");
 	  By FromTB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[3]/div/div[1]/div");
 	  By ToTB = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[3]/div/div[3]/div/div[2]/input");
-	  By DeptDate = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div/div[1]/div[2]");
+//	  By DeptDate = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div/div[1]");
 	  By ReturnDate = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div/div[2]/div[2]/div[1]");
-	  By Passenger = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div/div[2]");
+	  By Passenger = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div");
 	  By Currency = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[2]/div/div[2]");
 	  By searchFlightBtn = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[7]/div[2]/div");
 
@@ -122,99 +154,97 @@ public class TestNG_ClassSpiceJet{
 	 wait(500);
 	 driver.findElement(ToTB).sendKeys("Mumbai (BOM)");
 	 wait(500);
-	 														
-	 Date date1=new Date();															//for date stuff 
-	System.out.println(date1);
-	DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy ");
-	String date2= dateFormat.format(date1);
-	System.out.println(date2);
-	String date3="10/12/2022";
-	System.out.println("1");
-	if(date2.compareTo(date3)<0);
-	System.out.println("date is less than today");
-	wait(2000);
-	System.out.println("11");
-	 driver.findElement(DeptDate).click();	//------------------------------------------------yha problem ari hai--------------------
-	 wait(900);
-	 System.out.println("111");
-//	 driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div[2]/div[2]/div[3]/div[2]/div/div[2]/div/div[3]/div[2]/div[6]/div")).click();
-//	 WebElement month = driver.findElement(month combo locator);
-//	 Select monthCombo = new Select(month);
-//	 monthCombo.selectByVisibleText("March");
-//
-//	 WebElement year = driver.findElement(year combo locator);
-//	 Select yearCombo = new Select(year);
-//	 yearCombo.selectByVisibleText("2015");
-//
-//	 driver.click(By.linkText("31"));
-//	 driver.findElement(By.linkText("15"));
-	 
-		Actions actions = new Actions(driver);		//for mouse hover to select date
-		actions.moveToElement(driver.findElement(By.xpath(date3)));
-		actions.click();
-		actions.build().perform();
+	 			
+//	 driver.findElement(DeptDate).click();															//no need of clicking this it opens automatically
+//	 wait(900); 
+	 WebElement dateChoice = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[4]/div/div[2]/div[2]/div[3]/div[2]/div/div[2]/div/div[3]/div[2]/div[3]/div"));
+		Actions actions = new Actions(driver);														//for mouse hover to select date
+		actions.moveToElement(dateChoice).click().build().perform();								//used "actions" since 
+		
 	 
 	 
 	 wait(800);
-	 System.out.println("1111");
 	if( driver.findElement(ReturnDate).isEnabled()==false)
 	{
 		System.out.print("It is one way Ticket");
 	}
-	System.out.println("11111");
+	
 //	Actions actions = new Actions(driver);
-	actions.moveToElement(driver.findElement(Passenger));
-	actions.click();
-																	// for passenger stuff
-	By adultmore = By.xpath("");
-	By adultless = By.xpath("");
-	By childmore = By.xpath("");
-	By childless = By.xpath("");
-	By infantmore = By.xpath("");
-	By infantless = By.xpath("");
-	By doneBTN = By.xpath("");
+	WebElement Passengers = driver.findElement(Passenger);
+	actions.moveToElement(Passengers).click().build().perform();									// for passenger stuff
+	
+	
+	WebElement adultmore = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[2]/div[3]"));
+	WebElement adultless = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[1]/div[1]/div[2]/div[1]"));
+	WebElement childmore = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[3]"));
+	WebElement childless = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[1]/div[2]/div[2]/div[1]"));
+	WebElement infantmore = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[1]/div[3]/div[2]/div[3]"));
+	WebElement infantless = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[1]/div[3]/div[2]/div[1]"));
+	WebElement doneBTN = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[2]/div"));
 	wait(900);
 	for(int i =0; i<2; i++) {
-	actions.click(driver.findElement(adultmore));
+	actions.moveToElement(adultmore).click();
+	wait(1000);
 	}
+	actions.build().perform();
 	wait(900);
 	for(int i =0 ; i<2; i++) {
-		actions.click(driver.findElement(childmore));
+		actions.moveToElement(childmore).click();
+		wait(1000);
 	}
+	actions.build().perform();
 	wait(900);
-//	 WebElement Element = driver.findElement(By.linkText("Linux"));
-//
-//     //This will scroll the page till the element is found		
-//     js.executeScript("arguments[0].scrollIntoView();", Element);	
 	
-	 WebElement Element = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[1]/div/div[2]/div[2]/div/div[2]/div"));
+	actions.moveToElement(doneBTN).click().perform();
+	wait(500);
 
-     //This will scroll the page till the element is found		
-//     js.executeScript("arguments[0].scrollIntoView();", Element);
-     wait(1000);
-     actions.build().perform();
-     
-     driver.findElement(Currency).click();					//for currency 
-     driver.findElement(By.linkText("INR")).click();
+	driver.findElement(Currency).click();
+	wait(1000);
+    
+     WebElement INR = driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[5]/div[2]/div[2]/div[2]/div/div[1]"));
+     actions.moveToElement(INR).click().build().perform();
      wait(2000);
      driver.findElement(searchFlightBtn).click();
      wait(8000);
      
+     WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(20));
+ 	waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"main-container\"]/div/div[3]/div/div[1]/div[1]/div/div[1]")));
+ 	 
   }
   
   
   
   
-//  @Test(priority=3)
-//	 public void SelectFlight() {
-//	  By AllFlightsRB = By.xpath("//*[@id=\"list-results-section-0\"]/div[1]/div[2]/div[2]/div/div[2]/div");
-//	  List<WebElement> flights = driver.findElements(By.tagName(null))
-//	  
-//	  
-//	  driver.findElement(AllFlightsRB).click();
-//	  driver
-		 
-//	 }
+  @Test(priority=3)
+	 public void SelectFlight() {
+	  
+		Actions actions = new Actions(driver);	
+		System.out.println("1");
+		driver.findElement(By.xpath("//*[@id=\"list-results-section-0\"]/div[1]/div[2]/div[2]/div/div[2]/div")).click();
+		wait(1000);
+		System.out.println("11");
+		WebElement FirstFlight = driver.findElement(By.xpath("//*[@id=\"list-results-section-0\"]/div[5]/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/svg/circle"));
+		System.out.println("111");
+		if(FirstFlight.isDisplayed()==true)
+		{
+			actions.moveToElement(FirstFlight).click().build().perform();
+			wait(1000);
+			System.out.println("1111a");
+		}
+		else
+		{
+			System.out.print("There is no flight Available");
+			System.out.println("1111b");
+			driver.quit();
+		}
+		
+		System.out.println("11111");
+		WebElement ContinueBTN = driver.findElement(By.xpath("//*[@id=\"replacedbutton\"]"));
+		wait(2000);
+		actions.moveToElement(ContinueBTN).click().build().perform();
+		System.out.println("71");
+		
+	 }
   
   
 }
