@@ -122,7 +122,7 @@ public class TestNG_ClassSpiceJet{
 	  driver.findElement(EmailRBtn).click();
 	  wait(900); 
 	  driver.findElement(EmailTxtBox).sendKeys("anjulgupta1205@gmail.com");
-	  driver.findElement(PassTxtBox).sendKeys("$");
+	  driver.findElement(PassTxtBox).sendKeys("Anjul12$");
 	  wait(500);
 	  driver.findElement(LoginBtn2).click();
 	  wait(6000);
@@ -147,13 +147,13 @@ public class TestNG_ClassSpiceJet{
 	  By searchFlightBtn = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div[3]/div[2]/div[7]/div[2]/div");
 
 	 driver.findElement(FlightOption).click();
-	 wait(500);
+	 wait(1000);
 	 driver.findElement(OneWayRB).click();
-	 wait(500);
-	 driver.findElement(FromTB).sendKeys("Dehradun (DED)");
-	 wait(500);
+	 wait(1000);
+	 driver.findElement(FromTB).sendKeys("Delhi");
+	 wait(1000);
 	 driver.findElement(ToTB).sendKeys("Mumbai (BOM)");
-	 wait(500);
+	 wait(1000);
 	 			
 //	 driver.findElement(DeptDate).click();															//no need of clicking this it opens automatically
 //	 wait(900); 
@@ -215,37 +215,232 @@ public class TestNG_ClassSpiceJet{
   
   
   
+  
+  
+  
+  
   @Test(priority=3)
 	 public void SelectFlight() {
-	  
+		WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(40));
 		Actions actions = new Actions(driver);	
-		System.out.println("1");
-		driver.findElement(By.xpath("//*[@id=\"list-results-section-0\"]/div[1]/div[2]/div[2]/div/div[2]/div")).click();
 		wait(1000);
-		System.out.println("11");
-		WebElement FirstFlight = driver.findElement(By.xpath("//*[@id=\"list-results-section-0\"]/div[5]/div/div/div[2]/div[1]/div/div/div/div[1]/div[1]/svg/circle"));
-		System.out.println("111");
+		//radio button of "All flight"
+		driver.findElement(By.xpath("//*[@id=\"list-results-section-0\"]/div[1]/div[2]/div[2]/div/div[2]/div")).click();
+		wait(2000);
+		//first flight, first radio button 
+		WebElement FirstFlight = driver.findElement(By.xpath("//*[@id=\"list-results-section-0\"]/div[5]/div[1]/div/div[2]/div[1]/div/div/div"));
+		//if fight is available
 		if(FirstFlight.isDisplayed()==true)
 		{
 			actions.moveToElement(FirstFlight).click().build().perform();
+			wait(6000);
+			waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.id("replacedbutton")));
 			wait(1000);
-			System.out.println("1111a");
 		}
 		else
 		{
 			System.out.print("There is no flight Available");
-			System.out.println("1111b");
 			driver.quit();
 		}
-		
-		System.out.println("11111");
-		WebElement ContinueBTN = driver.findElement(By.xpath("//*[@id=\"replacedbutton\"]"));
-		wait(2000);
-		actions.moveToElement(ContinueBTN).click().build().perform();
-		System.out.println("71");
-		
+		wait(3000);
+//		WebElement ContinueBTN = driver.findElement(By.xpath("//*[@id=\"replacedbutton\"]/div[1]"));
+//		actions.moveToElement(ContinueBTN).click().build().perform();
+		driver.findElement(By.id("replacedbutton")).click();
+		//replacedbutton
+	 	waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.id("upgrade_spicemax")));
+	 	wait(2000);
+	 	driver.findElement(By.id("continue2")).click();
+	 	wait(4000);
+//	 	WebElement SkipBTN = driver.findElement(By.id("continue2"));
+//	 	actions.click(SkipBTN).build().perform();
+	 	waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"primary-contact-details\"]/div[1]")));
+	 	wait(2000);
 	 }
   
+  
+  @Test(priority=4, enabled=false)
+  public void BookFlight() {
+	  By Title = By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[1]/div[2]/div");
+	  By FirstName = By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[2]/div/div/div[2]/input");
+	  By LastName = By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[3]/div/div/div[2]/input");
+	  By ContactNo = By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[4]/div/div[2]/input");
+	  By Email = By.xpath("//*[@id=\"primary-contact-details\"]/div[4]/div[1]/div/div/div[2]/input");
+	  By Country = By.xpath("//*[@id=\"primary-contact-details\"]/div[4]/div[2]/div[2]/div");
+	  By Town = By.xpath("//*[@id=\"primary-contact-details\"]/div[4]/div[3]/div/div/div[2]/input");
+	  By PrimaryPassengerRB = By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[1]/div/div/div/div[1]/svg/g/rect");
+	  By PassangerTitle = By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[2]/div[1]/div[2]/div/div[2]");
+	  By PassengerFirstName = By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[2]/div[2]/div/div/div[2]/input");
+	  By PassengerLastName = By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[2]/div[3]/div/div/div[2]/input");
+	  By PassengerMobileNo = By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[2]/div[4]/div/div[1]/div/div[2]/input");
+	  By ContinueBTN = By.xpath("//*[@id=\"travellers-view\"]/div[2]/div/div/div[2]");
+	  
+	  
+	  WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(20));
+	  Actions actions = new Actions(driver);	
+		
+		actions.click(driver.findElement(Title)).click();
+		actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]/div/div"))).click().build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(FirstName)).click().sendKeys("ANJUL").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(LastName)).click().sendKeys("GUPTA").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(ContactNo)).click().sendKeys("8448996791").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(Email)).click().sendKeys("anjulgupta1205@gmail.com").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(Country)).click();
+		wait(800);
+		actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"primary-contact-details\"]/div[4]/div[2]/div[2]/div[2]/div[2]/div[101]/div"))).click().build().perform();
+		wait(800);
+
+		actions.click(driver.findElement(Town)).click().sendKeys("HARIDWAR").build().perform();
+		wait(800);
+		//PASSENGER PART
+		
+		actions.click(driver.findElement(PrimaryPassengerRB)).click().build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(PassangerTitle));
+		wait(800);
+		actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/div[3]/div"))).click().build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(PassengerFirstName)).click().sendKeys("ANJUL").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(PassengerLastName)).click().sendKeys("GUPTA").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(PassengerMobileNo)).click().sendKeys("8449995426").build().perform();
+		wait(800);
+		
+		driver.findElement(By.xpath("//*[@id=\"pax-item-MCFBRFQ-\"]/div[2]/div/div/div[4]/div/div")).click();
+		wait(800);
+		
+		//PASSANGER PART2
+	
+		actions.click(driver.findElement(By.xpath("//*[@id=\\\"pax-item-MSFBRFQ-\\\"]/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")));
+		wait(800);
+		actions.moveToElement(driver.findElement(By.xpath("//*[@id=\\\"pax-item-MSFBRFQ-\\\"]/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/div[3]"))).click().build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(By.xpath("//*[@id=\\\"pax-item-MSFBRFQ-\\\"]/div[2]/div/div/div[1]/div[2]/div/div/div[2]/input"))).click().sendKeys("PRIYANSHU").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(By.xpath("//*[@id=\\\"pax-item-MSFBRFQ-\\\"]/div[2]/div/div/div[1]/div[3]/div/div/div[2]/input"))).click().sendKeys("GUPTA").build().perform();
+		wait(800);
+		
+		actions.click(driver.findElement(By.xpath("//*[@id=\\\"pax-item-MSFBRFQ-\\\"]/div[2]/div/div/div[1]/div[4]/div/div[1]/div/div[2]/input"))).click().sendKeys("9456963258").build().perform();
+		wait(800);
+		
+		driver.findElement(By.xpath("//*[@id=\"pax-item-MSFBRFQ-\"]/div[2]/div/div/div[3]/div/div/div")).click();
+		wait(800);
+		
+		//PASSANGER PART3
+		
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MiFBRFQ-\"]/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")));
+			wait(800);
+			actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"pax-item-MiFBRFQ-\"]/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/div[3]/div"))).click().build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MiFBRFQ-\"]/div[2]/div/div/div[1]/div[2]/div/div/div[2]/input"))).click().sendKeys("REENA").build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MiFBRFQ-\"]/div[2]/div/div/div[1]/div[3]/div/div/div[2]/input"))).click().sendKeys("GUPTA").build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MiFBRFQ-\"]/div[2]/div/div/div[1]/div[4]/div/div[1]/div/div[2]/input"))).click().sendKeys("9456964214").build().perform();
+			wait(800);
+			
+			driver.findElement(By.xpath("")).click();
+			wait(800);
+			
+			//PASSANGER PART4
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MyFDSEQ-\"]/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")));
+			wait(800);
+			actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"pax-item-MyFDSEQ-\"]/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/div[1]"))).click().build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MyFDSEQ-\"]/div[2]/div/div/div[1]/div[2]/div/div/div[2]/input"))).click().sendKeys("SHIVI").build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-MyFDSEQ-\"]/div[2]/div/div/div[1]/div[3]/div/div/div[2]/input"))).click().sendKeys("GUPTA").build().perform();
+			wait(800);
+			
+			driver.findElement(By.xpath("//*[@id=\"pax-item-MyFDSEQ-\"]/div[2]/div/div/div[3]/div/div/div")).click();
+			wait(800);
+			
+			//PASSANGER PART5
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-NCFDSEQ-\"]/div[2]/div/div/div[1]/div[1]/div[2]/div/div[2]")));
+			wait(800);
+			actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"pax-item-NCFDSEQ-\"]/div[2]/div/div/div[1]/div[1]/div[2]/div[2]/div[1]"))).click().build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-NCFDSEQ-\"]/div[2]/div/div/div[1]/div[2]/div/div/div[2]/input"))).click().sendKeys("POOJA").build().perform();
+			wait(800);
+			
+			actions.click(driver.findElement(By.xpath("//*[@id=\"pax-item-NCFDSEQ-\"]/div[2]/div/div/div[1]/div[3]/div/div/div[2]/input"))).click().sendKeys("GUPTA").build().perform();
+			wait(800);
+			
+			driver.findElement(By.xpath("//*[@id=\"travellers-view\"]/div[2]/div/div/div[2]")).click();
+			wait(800);
+			
+			//next page element
+			waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"main-container\"]/div/div[5]/div/div/div[2]/div/div/div[1]/div[1]/div[1]")));
+			wait(800);
+			
+  }
+  
+  
+  @Test(priority=5, enabled=false)
+  public void ConfirmBooking() {
+	  
+	  WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(20));
+	  Actions actions = new Actions(driver);	
+	
+	  driver.findElement(By.xpath("//*[@id=\"addons-container\"]/div[2]/div[2]/div/div/div[2]/div/div[1]/div[1]/div[2]/div")).click();
+	  //seat selection visibility
+	  waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[13]/div/div/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]")));
+		//selecting 7A seat
+	  actions.moveToElement(driver.findElement(By.xpath("/html/body/div[13]/div/div/div[2]/div[2]/div[2]/div[7]/div/div[2]/div[2]/div[4]/div[37]/div/div/div/div/svg/g/g/path[2]"))).click();
+	  //visiblity of heading of new frame
+	  waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[206]/div/div/div/div/div[1]/div")));
+		
+	  actions.click(driver.findElement(By.xpath("/html/body/div[206]/div/div/div/div/div[3]/div/div/div[2]/div[2]/div/div[1]/div[1]/svg/g/circle[1]")));
+	  actions.click(driver.findElement(By.xpath("/html/body/div[206]/div/div/div/div/div[4]/div[1]/div")));
+	  actions.click(driver.findElement(By.xpath("/html/body/div[206]/div/div/div/div/div[5]/div[3]/div/div")));
+	  
+	  
+	  actions.click(driver.findElement(By.xpath("/html/body/div[13]/div/div/div[2]/div[2]/div[1]/div[3]/div[2]/div[2]/div"))).build().perform();
+		
+	  //driver.findElement(By.xpath("//*[@id=\"main-container\"]/div/div[5]/div/div/div[2]/div/div/div[4]"));
+	System.out.println("The last Continue Button for payment is not clicked deliberatly");
+	
+  }
+  
+  
+  @Test(priority=6, enabled=false)
+  public void LogOut() {
+	  
+	  WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(20));
+	  Actions actions = new Actions(driver);	
+	
+	  
+	  By LogoutDD = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div/div[3]/div[1]");
+	  By LogoutBTN = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div/div[3]/div[2]/div[3]");
+	  
+	  actions.click(driver.findElement(LogoutDD));
+	  actions.moveToElement(driver.findElement(LogoutBTN)).click().build().perform();
+	  
+  }
   
 }
 
