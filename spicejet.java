@@ -184,13 +184,13 @@ public class TestNG_ClassSpiceJet{
 	wait(900);
 	for(int i =0; i<2; i++) {
 	actions.moveToElement(adultmore).click();
-	wait(1000);
+	wait(500);
 	}
 	actions.build().perform();
 	wait(900);
 	for(int i =0 ; i<2; i++) {
 		actions.moveToElement(childmore).click();
-		wait(1000);
+		wait(500);
 	}
 	actions.build().perform();
 	wait(900);
@@ -207,7 +207,7 @@ public class TestNG_ClassSpiceJet{
      driver.findElement(searchFlightBtn).click();
      wait(8000);
      
-     WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(20));
+     WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(40));
  	waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"main-container\"]/div/div[3]/div/div[1]/div[1]/div/div[1]")));
  	 
   }
@@ -247,18 +247,19 @@ public class TestNG_ClassSpiceJet{
 //		actions.moveToElement(ContinueBTN).click().build().perform();
 		driver.findElement(By.id("replacedbutton")).click();
 		//replacedbutton
+		wait(1000);
 	 	waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.id("upgrade_spicemax")));
-	 	wait(2000);
+	 	wait(1000);
 	 	driver.findElement(By.id("continue2")).click();
-	 	wait(4000);
+	 	wait(1000);
 //	 	WebElement SkipBTN = driver.findElement(By.id("continue2"));
 //	 	actions.click(SkipBTN).build().perform();
 	 	waitElement.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"primary-contact-details\"]/div[1]")));
-	 	wait(2000);
+	 	wait(3000);
 	 }
   
   
-  @Test(priority=4, enabled=false)
+  @Test(priority=4)
   public void BookFlight() {
 	  By Title = By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[1]/div[2]/div");
 	  By FirstName = By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[2]/div/div/div[2]/input");
@@ -279,7 +280,8 @@ public class TestNG_ClassSpiceJet{
 	  Actions actions = new Actions(driver);	
 		
 		actions.click(driver.findElement(Title)).click();
-		actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]/div/div"))).click().build().perform();
+		wait(800);
+		actions.moveToElement(driver.findElement(By.xpath("//*[@id=\"primary-contact-details\"]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]/div"))).click().build().perform();
 		wait(800);
 		
 		actions.click(driver.findElement(FirstName)).click().sendKeys("ANJUL").build().perform();
@@ -427,10 +429,9 @@ public class TestNG_ClassSpiceJet{
   }
   
   
-  @Test(priority=6, enabled=false)
+  @Test(priority=6, enabled=true)
   public void LogOut() {
 	  
-	  WebDriverWait waitElement = new WebDriverWait(driver, Duration.ofSeconds(20));
 	  Actions actions = new Actions(driver);	
 	
 	  
@@ -438,44 +439,9 @@ public class TestNG_ClassSpiceJet{
 	  By LogoutBTN = By.xpath("//*[@id=\"main-container\"]/div/div[1]/div/div[3]/div[2]/div[3]");
 	  
 	  actions.click(driver.findElement(LogoutDD));
+	  wait(1000);
 	  actions.moveToElement(driver.findElement(LogoutBTN)).click().build().perform();
 	  
   }
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
